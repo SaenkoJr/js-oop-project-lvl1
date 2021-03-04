@@ -25,6 +25,6 @@
     "jest-cli": "^26.6.3"
   },
   "dependencies": {
-    "yup": "^0.32.9"
+    "lodash": "^4.17.21"
   }
 }
