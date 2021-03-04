@@ -2,9 +2,9 @@ import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import inRange from 'lodash/inRange';
 
-import StringScheme from './Scheme';
+import Schema from './Schema';
 
-export default class NumberScheme extends StringScheme {
+export default class NumberSchema extends Schema {
   static defaultOptions = {
     isRequired: false,
     isPositive: false,
@@ -25,18 +25,18 @@ export default class NumberScheme extends StringScheme {
   }
 
   required() {
-    this.options = { ...this.options, isRequired: true };
+    return new NumberSchema({ ...this.options, isRequired: true });
   }
 
   positive() {
-    return new NumberScheme({ ...this.options, isPositive: true });
+    return new NumberSchema({ ...this.options, isPositive: true });
   }
 
   range(start, end) {
-    this.options = {
+    return new NumberSchema({
       ...this.options,
       range: { isCheck: true, start, end },
-    };
+    });
   }
 
   isValid(num) {

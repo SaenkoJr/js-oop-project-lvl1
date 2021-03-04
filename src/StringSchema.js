@@ -1,9 +1,9 @@
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 
-import Scheme from './Scheme';
+import Schema from './Schema';
 
-export default class StringScheme extends Scheme {
+export default class StringScheme extends Schema {
   static defaultOptions = {
     isRequired: false,
     minLength: 0,
@@ -20,7 +20,7 @@ export default class StringScheme extends Scheme {
   }
 
   required() {
-    this.options = { ...this.options, isRequired: true };
+    return new StringScheme({ ...this.options, isRequired: true });
   }
 
   minLength(length) {

@@ -1,19 +1,24 @@
 /* eslint-disable */
 
-import StringScheme from './StringScheme';
-import NumberScheme from './NumberScheme';
-import ArrayScheme from './ArrayScheme';
+import StringSchema from './StringSchema';
+import NumberSchema from './NumberSchema';
+import ArraySchema from './ArraySchema';
+import ShapeSchema from './ShapeSchema';
 
 export default class Validator {
   string() {
-    return new StringScheme();
+    return new StringSchema();
   }
 
   number() {
-    return new NumberScheme();
+    return new NumberSchema();
   }
 
   array() {
-    return new ArrayScheme();
+    return new ArraySchema();
+  }
+
+  object() {
+    return new ShapeSchema();
   }
 }

@@ -1,9 +1,9 @@
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 
-import Scheme from './Scheme';
+import Schema from './Schema';
 
-export default class ArrayScheme extends Scheme {
+export default class ArrayScheme extends Schema {
   static defaultOptions = {
     isRequired: false,
     size: null,
@@ -19,11 +19,11 @@ export default class ArrayScheme extends Scheme {
   }
 
   required() {
-    this.options = { ...this.options, isRequired: true };
+    return new ArrayScheme({ ...this.options, isRequired: true });
   }
 
   sizeof(size) {
-    this.options = { ...this.options, size };
+    return new ArrayScheme({ ...this.options, size });
   }
 
   isValid(arr) {
