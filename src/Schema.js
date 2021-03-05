@@ -10,38 +10,39 @@ export default class Schema {
   }
 
   required() {
-    const checker = {
-      name: 'required',
-      errorMsg: 'Value is required',
-      validation: (value) => !isNull(value),
-    };
+    const fn = (value) => !isNull(value);
+    this.addChecker('required', fn, 'Value is required');
 
-    return new this.constructor([...this.checkers, checker]);
+    return this;
   }
 
-  test(validatorName, v) {
-    const customChecker = this.customCheckers[validatorName] ?? noop;
-    const checker = {
-      name: validatorName,
-      errorMsg: 'Custom validator error.',
-      validation: (value) => customChecker(value, v),
-    };
+  test(validatorName, ...args) {
+    const customValidator = this.customCheckers[validatorName] ?? noop;
+    const fn = (value) => customValidator(value, ...args);
+    this.addChecker(validatorName, fn, 'Custom validator error');
 
-    return new this.constructor([...this.checkers, checker]);
+    return this;
   }
 
   isValid(value) {
     this.errors = {};
 
-    this.checkers.forEach(({ name, errorMsg, validation }) => {
-      const isValid = validation(value);
+    this.checkers.forEach(({ name, errorMessage, validator }) => {
+      const isValid = validator(value);
       if (isValid) {
         return;
       }
 
-      this.errors[name] = errorMsg;
+      this.errors[name] = errorMessage;
     });
 
     return isEmpty(this.errors);
+  }
+
+  addChecker(name, validator, errorMessage = 'Error') {
+    this.checkers = [
+      ...this.checkers,
+      { name, validator, errorMessage },
+    ];
   }
 }

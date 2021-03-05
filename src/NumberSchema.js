@@ -4,22 +4,20 @@ import Schema from './Schema';
 
 export default class NumberSchema extends Schema {
   positive() {
-    const checker = {
-      name: 'positive',
-      errorMsg: 'Number must be positive',
-      validation: (value) => value >= 0,
-    };
+    const fn = (value) => value >= 0;
+    this.addChecker('positive', fn, 'Number must be positive');
 
-    return new NumberSchema([...this.checkers, checker]);
+    return this;
   }
 
   range(start, end) {
-    const checker = {
-      name: 'range',
-      errorMsg: `Number must in range between ${start} and ${end}`,
-      validation: (value) => inRange(value, start, end),
-    };
+    const fn = (value) => inRange(value, start, end);
+    this.addChecker(
+      'range',
+      fn,
+      `Number must in range between ${start} and ${end}`,
+    );
 
-    return new NumberSchema([...this.checkers, checker]);
+    return this;
   }
 }

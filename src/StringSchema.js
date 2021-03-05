@@ -5,32 +5,23 @@ import Schema from './Schema';
 
 export default class StringScheme extends Schema {
   minLength(length) {
-    const checker = {
-      name: 'minLength',
-      errorMsg: `Line too short. Must be ${length}`,
-      validation: (value) => value.length >= length,
-    };
+    const fn = (value) => value.length >= length;
+    this.addChecker('minLength', fn, 'Line too short');
 
-    return new StringScheme([...this.checkers, checker]);
+    return this;
   }
 
   contains(str) {
-    const checker = {
-      name: 'contains',
-      errorMsg: `String must contain "${str}"`,
-      validation: (value) => value.includes(str),
-    };
+    const fn = (value) => value.includes(str);
+    this.addChecker('contains', fn, `String must contain "${str}"`);
 
-    return new StringScheme([...this.checkers, checker]);
+    return this;
   }
 
   required() {
-    const checker = {
-      name: 'required',
-      errorMsg: 'Value is required',
-      validation: (value) => !isNull(value) && !isEmpty(value),
-    };
+    const fn = (value) => !isNull(value) && !isEmpty(value);
+    this.addChecker('required', fn, 'Value is required');
 
-    return new StringScheme([...this.checkers, checker]);
+    return this;
   }
 }

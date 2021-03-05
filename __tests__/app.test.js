@@ -21,15 +21,18 @@ describe('Validator', () => {
     });
 
     it('required', () => {
-      const required = schema.required();
+      schema.required();
 
-      expect(required.isValid('what does the fox say')).toBeTruthy();
-      expect(required.isValid('hexlet')).toBeTruthy();
-      expect(required.isValid(null)).toBeFalsy();
-      expect(required.isValid('')).toBeFalsy();
+      expect(schema.isValid('what does the fox say')).toBeTruthy();
+      expect(schema.isValid('hexlet')).toBeTruthy();
+      expect(schema.isValid(null)).toBeFalsy();
+      expect(schema.isValid('')).toBeFalsy();
 
-      expect(required.contains('what').isValid('what does the fox say')).toBeTruthy();
-      expect(required.contains('whatthe').isValid('what does the fox say')).toBeFalsy();
+      expect(!schema.isValid(null)).toBe(true);
+      expect(!schema.isValid('')).toBeTruthy();
+
+      expect(schema.contains('what').isValid('what does the fox say')).toBeTruthy();
+      expect(schema.contains('whatthe').isValid('what does the fox say')).toBeFalsy();
     });
 
     it('min length', () => {
@@ -51,10 +54,10 @@ describe('Validator', () => {
     });
 
     it('required', () => {
-      const required = schema.required();
+      schema.required();
 
-      expect(required.isValid(42)).toBeTruthy();
-      expect(required.isValid(null)).toBeFalsy();
+      expect(schema.isValid(42)).toBeTruthy();
+      expect(schema.isValid(null)).toBeFalsy();
     });
 
     it('positive', () => {
@@ -65,12 +68,12 @@ describe('Validator', () => {
     });
 
     it('range', () => {
-      const ranged = schema.range(-5, 5);
+      schema.range(-5, 5);
 
-      expect(ranged.isValid(3)).toBeTruthy();
-      expect(ranged.isValid(-2)).toBeTruthy();
-      expect(ranged.isValid(42)).toBeFalsy();
-      expect(ranged.isValid(-42)).toBeFalsy();
+      expect(schema.isValid(3)).toBeTruthy();
+      expect(schema.isValid(-2)).toBeTruthy();
+      expect(schema.isValid(42)).toBeFalsy();
+      expect(schema.isValid(-42)).toBeFalsy();
     });
   });
 
@@ -86,19 +89,19 @@ describe('Validator', () => {
     });
 
     it('required', () => {
-      const required = schema.required();
+      schema.required();
 
-      expect(required.isValid([])).toBeTruthy();
-      expect(required.isValid(['jopa'])).toBeTruthy();
-      expect(required.isValid(null)).toBeFalsy();
+      expect(schema.isValid([])).toBeTruthy();
+      expect(schema.isValid(['jopa'])).toBeTruthy();
+      expect(schema.isValid(null)).toBeFalsy();
     });
 
     it('sizeof', () => {
-      const sizeof = schema.sizeof(2);
+      schema.sizeof(2);
 
-      expect(sizeof.isValid([1, 2])).toBeTruthy();
-      expect(sizeof.isValid([1])).toBeFalsy();
-      expect(sizeof.isValid([])).toBeFalsy();
+      expect(schema.isValid([1, 2])).toBeTruthy();
+      expect(schema.isValid([1])).toBeFalsy();
+      expect(schema.isValid([])).toBeFalsy();
     });
   });
 
@@ -109,15 +112,15 @@ describe('Validator', () => {
     });
 
     it('shape', () => {
-      const shape = schema.shape({
+      schema.shape({
         name: v.string().required(),
         age: v.number().positive(),
       });
 
-      expect(shape.isValid({ name: 'kolya', age: 100 })).toBeTruthy();
-      expect(shape.isValid({ name: 'maya', age: null })).toBeTruthy();
-      expect(shape.isValid({ name: '', age: null })).toBeFalsy();
-      expect(shape.isValid({ name: 'ada', age: -5 })).toBeFalsy();
+      expect(schema.isValid({ name: 'kolya', age: 100 })).toBeTruthy();
+      expect(schema.isValid({ name: 'maya', age: null })).toBeTruthy();
+      expect(schema.isValid({ name: '', age: null })).toBeFalsy();
+      expect(schema.isValid({ name: 'ada', age: -5 })).toBeFalsy();
     });
   });
 

@@ -1,13 +1,14 @@
 import Schema from './Schema';
 
 export default class ShapeSchema extends Schema {
-  constructor(objSchema = {}) {
+  constructor() {
     super();
-    this.objSchema = objSchema;
+    this.objSchema = {};
   }
 
   shape(objSchema) {
-    return new ShapeSchema({ ...this.objSchema, ...objSchema });
+    this.objSchema = objSchema;
+    return this;
   }
 
   isValid(obj) {

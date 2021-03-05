@@ -2,12 +2,9 @@ import Schema from './Schema';
 
 export default class ArraySchema extends Schema {
   sizeof(size) {
-    const checker = {
-      name: 'sizeof',
-      errorMsg: 'Array to short',
-      validation: (value) => value.length >= size,
-    };
+    const fn = (value) => value.length >= size;
+    this.addChecker('sizeof', fn, 'Array to short');
 
-    return new ArraySchema([...this.checkers, checker]);
+    return this;
   }
 }

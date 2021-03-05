@@ -26,18 +26,15 @@ export default class Validator {
   }
 
   string() {
-    const customValidators = this.validators.string;
-    return new StringSchema([], customValidators);
+    return new StringSchema([], this.validators.string);
   }
 
   number() {
-    const customValidators = this.validators.number;
-    return new NumberSchema([], customValidators);
+    return new NumberSchema([], this.validators.number);
   }
 
   array() {
-    const customValidators = this.validators.array;
-    return new ArraySchema([], customValidators);
+    return new ArraySchema([], this.validators.array);
   }
 
   object() {
