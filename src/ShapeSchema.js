@@ -1,32 +1,19 @@
 import Schema from './Schema';
 
 export default class ShapeSchema extends Schema {
-  static defaultOptions = {
-    objSchema: {},
-  };
-
-  constructor(options = {}) {
+  constructor(objSchema = {}) {
     super();
-    this.options = {
-      ...this.constructor.defaultOptions,
-      ...options,
-    };
-    this.errors = [];
+    this.objSchema = objSchema;
   }
 
   shape(objSchema) {
-    return new ShapeSchema({ ...this.options, objSchema });
+    return new ShapeSchema({ ...this.objSchema, ...objSchema });
   }
 
   isValid(obj) {
-    const { objSchema } = this.options;
-    let isValid = true;
-
-    Object.entries(objSchema).forEach(([key, value]) => {
-      if (!value.isValid(obj[key])) {
-        isValid = false;
-      }
-    });
+    const isValid = Object.entries(this.objSchema)
+      .map(([name, schema]) => schema.isValid(obj[name]))
+      .every((result) => result);
 
     return isValid;
   }

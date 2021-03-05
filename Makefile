@@ -12,4 +12,7 @@ lint:
 publish:
 	npm publish
 
+test-coverage:
+	yarn test -- --coverage --coverageProvider=v8
+
 .PHONY: test

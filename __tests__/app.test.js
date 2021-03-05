@@ -60,6 +60,7 @@ describe('Validator', () => {
     it('positive', () => {
       expect(schema.positive().isValid(42)).toBeTruthy();
       expect(schema.positive().isValid(0)).toBeTruthy();
+      expect(schema.positive().isValid(null)).toBeTruthy();
       expect(schema.positive().isValid(-42)).toBeFalsy();
     });
 
@@ -117,6 +118,32 @@ describe('Validator', () => {
       expect(shape.isValid({ name: 'maya', age: null })).toBeTruthy();
       expect(shape.isValid({ name: '', age: null })).toBeFalsy();
       expect(shape.isValid({ name: 'ada', age: -5 })).toBeFalsy();
+    });
+  });
+
+  describe('Custom validations', () => {
+    beforeEach(() => {
+      v = new Validator();
+    });
+
+    it('custom string validator', () => {
+      const fn = (value, start) => value.startsWith(start);
+
+      v.addValidator('string', 'startWith', fn);
+
+      schema = v.string().test('startWith', 'H');
+      expect(schema.isValid('exlet')).toBeFalsy();
+      expect(schema.isValid('Hexlet')).toBeTruthy();
+    });
+
+    it('custom number validator', () => {
+      const fn = (value, min) => value >= min;
+
+      v.addValidator('number', 'min', fn);
+
+      schema = v.number().test('min', 3);
+      expect(schema.isValid(2)).toBeFalsy();
+      expect(schema.isValid(6)).toBeTruthy();
     });
   });
 });
