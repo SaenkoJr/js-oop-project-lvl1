@@ -62,7 +62,7 @@ describe('Validator', () => {
 
     it('positive', () => {
       expect(schema.positive().isValid(42)).toBeTruthy();
-      expect(schema.positive().isValid(0)).toBeTruthy();
+      expect(schema.positive().isValid(0)).toBeFalsy();
       expect(schema.positive().isValid(null)).toBeTruthy();
       expect(schema.positive().isValid(-42)).toBeFalsy();
     });
