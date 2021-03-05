@@ -1,6 +1,4 @@
 ---
-parser: 'babel-eslint'
-
 plugins:
   # https://github.com/jest-community/eslint-plugin-jest
   - jest
