@@ -36,5 +36,4 @@ jobs:
       - name: Test & publish code coverage
         run:
           coverageCommand: make test-coverage
-          debug: true
 
