@@ -4,7 +4,7 @@ import Schema from './Schema';
 
 export default class NumberSchema extends Schema {
   positive() {
-    const fn = (value) => value >= 0;
+    const fn = (value) => value > 0;
     this.addChecker('positive', fn, 'Number must be positive');
 
     return this;
